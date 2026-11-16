@@ -1,0 +1,18 @@
+﻿@host = http://localhost:5005
+@cartId = 11111111-1111-1111-1111-111111111111
+
+GET {{host}}/api/v1/products
+X-Demo-User: demo
+
+###
+GET {{host}}/api/v1/carts/{{cartId}}
+X-Demo-User: demo
+
+###
+PUT {{host}}/api/v1/carts/{{cartId}}/items/monitor
+X-Demo-User: demo
+If-Match: "1"
+Content-Type: application/json
+
+{"quantity":1}
+

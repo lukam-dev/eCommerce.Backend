@@ -1,0 +1,3 @@
+﻿# Applied SQL checksums must remain identical across Windows and Linux checkouts.
+*.sql -text
+

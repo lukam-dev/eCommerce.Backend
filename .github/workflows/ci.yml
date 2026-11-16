@@ -1,0 +1,33 @@
+﻿name: Cart API CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - run: docker compose up -d --build sqlserver database
+      - run: docker compose wait database
+      - run: dotnet restore eCommerce.Backend.sln
+      - run: dotnet test eCommerce.Backend.sln -c Release --no-restore --logger trx --results-directory TestResults
+      - run: dotnet publish eCommerce.Backend/eCommerce.Backend.csproj -c Release --no-restore -o artifacts/api
+      - run: docker build -f eCommerce.Backend/Dockerfile -t cart-api:ci .
+      - name: Database logs
+        if: always()
+        run: docker compose logs sqlserver database
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results
+          path: TestResults
+      - name: Stop containers
+        if: always()
+        run: docker compose down
+

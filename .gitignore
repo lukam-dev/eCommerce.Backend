@@ -1,0 +1,11 @@
+﻿**/bin/
+**/obj/
+.vs/
+Microsoft/
+**/*.db
+**/*.db-shm
+**/*.db-wal
+TestResults/
+.env
+
+artifacts/
