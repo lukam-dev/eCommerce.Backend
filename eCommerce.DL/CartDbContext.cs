@@ -26,17 +26,17 @@ public partial class CartDbContext : DbContext
 
             entity.HasIndex(e => e.OwnerId, "IX_Carts_OwnerId");
 
-            entity.Property(e => e.Id).HasDefaultValueSql("(newsequentialid())");
+            entity.Property(e => e.Id).HasDefaultValueSql("(newsequentialid())", "DF_Carts_Id");
             entity.Property(e => e.Currency)
                 .HasMaxLength(3)
                 .IsUnicode(false)
-                .HasDefaultValue("EUR")
-                .IsFixedLength();
-            entity.Property(e => e.ExpiresAt).HasDefaultValueSql("(dateadd(day,(30),sysdatetimeoffset()))");
+                .IsFixedLength()
+                .HasDefaultValue("EUR", "DF_Carts_Currency");
+            entity.Property(e => e.ExpiresAt).HasDefaultValueSql("(dateadd(day,(30),sysdatetimeoffset()))", "DF_Carts_ExpiresAt");
             entity.Property(e => e.OwnerId)
                 .HasMaxLength(200)
                 .UseCollation("Latin1_General_100_BIN2");
-            entity.Property(e => e.Version).HasDefaultValue(1);
+            entity.Property(e => e.Version).HasDefaultValue(1, "DF_Carts_Version");
         });
 
         modelBuilder.Entity<CartItem>(entity =>
