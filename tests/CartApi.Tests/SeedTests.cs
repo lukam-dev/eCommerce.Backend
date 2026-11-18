@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Text.Json;
 using System.Net.Http.Json;
 using eCommerce.Database;
 using eCommerce.ServiceInterfaces.Models;
@@ -40,7 +41,10 @@ public sealed partial class CartTests
         Assert.Contains("X-Demo-User", schema);
         Assert.Contains("If-Match", schema);
         Assert.Contains("/api/v1/products", schema);
+        using var document = JsonDocument.Parse(schema);
+        var security = document.RootElement.GetProperty("components").GetProperty("securitySchemes").GetProperty("Bearer");
+        Assert.Equal("apiKey", security.GetProperty("type").GetString());
+        Assert.Equal("X-Demo-User", security.GetProperty("name").GetString());
+        Assert.True(document.RootElement.GetProperty("security")[0].TryGetProperty("Bearer", out _));
     }
 }
-
-

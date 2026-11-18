@@ -10,7 +10,7 @@ using eCommerce.ServiceInterfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddProblemDetails();
@@ -27,10 +27,9 @@ builder.Services.AddSwaggerGen(o =>
         Scheme = "bearer", BearerFormat = "JWT",
         Description = demo ? "Development only: enter demo to access the seeded cart." : "OIDC access token."
     });
-    o.AddSecurityRequirement(new OpenApiSecurityRequirement
+    o.AddSecurityRequirement(document => new OpenApiSecurityRequirement
     {
-        [new OpenApiSecurityScheme { Reference = new OpenApiReference
-            { Type = ReferenceType.SecurityScheme, Id = "Bearer" } }] = Array.Empty<string>()
+        [new OpenApiSecuritySchemeReference("Bearer", document)] = new List<string>()
     });
 });
 builder.Services.AddDbContext<CartDbContext>(o =>
@@ -80,7 +79,11 @@ builder.Services.AddHealthChecks().AddCheck<DatabaseHealthCheck>("database", tag
 builder.Logging.AddJsonConsole();
 
 var app = builder.Build();
-app.UseExceptionHandler();
+app.UseExceptionHandler(new ExceptionHandlerOptions
+{
+    // Preserve exception diagnostics when handlers return true on .NET 10.
+    SuppressDiagnosticsCallback = _ => false
+});
 app.Use(async (context, next) =>
 {
     context.Response.Headers["X-Content-Type-Options"] = "nosniff";
@@ -104,5 +107,3 @@ if (demo) app.Logger.LogWarning("DEMO AUTHENTICATION ENABLED: local development 
 app.Run();
 
 public partial class Program { }
-
-

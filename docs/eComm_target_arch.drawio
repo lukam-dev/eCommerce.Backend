@@ -1,0 +1,71 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Page-1" id="FHASt5N3ty_GhxHExGSG">
+    <mxGraphModel dx="1338" dy="657" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="sJppqxGDxFXGZUXdPLQ5-1" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="eCommerce&lt;div&gt;High-level target architecture&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="190" as="geometry" />
+        </mxCell>
+        <mxCell id="sJppqxGDxFXGZUXdPLQ5-4" edge="1" parent="1" source="sJppqxGDxFXGZUXdPLQ5-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="sJppqxGDxFXGZUXdPLQ5-3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sJppqxGDxFXGZUXdPLQ5-5" connectable="0" parent="sJppqxGDxFXGZUXdPLQ5-4" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;labelPadding=0 4;" value="HTTPS / REST" vertex="1">
+          <mxGeometry relative="1" x="-0.1429" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sJppqxGDxFXGZUXdPLQ5-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="Web shop / Mobile app / Marketplace / B2B integrations" vertex="1">
+          <mxGeometry height="90" width="390" x="230" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="sJppqxGDxFXGZUXdPLQ5-9" edge="1" parent="1" source="sJppqxGDxFXGZUXdPLQ5-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="sJppqxGDxFXGZUXdPLQ5-7" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sJppqxGDxFXGZUXdPLQ5-10" connectable="0" parent="sJppqxGDxFXGZUXdPLQ5-9" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;labelPadding=0 4;" value="Microservices" vertex="1">
+          <mxGeometry relative="1" x="-0.0089" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sJppqxGDxFXGZUXdPLQ5-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="CDN + WAF&lt;br&gt;API Gateway&lt;br&gt;(TLS; Rate limits; Routing; JWT)" vertex="1">
+          <mxGeometry height="90" width="390" x="230" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="sJppqxGDxFXGZUXdPLQ5-7" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="190" width="390" x="230" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="sJppqxGDxFXGZUXdPLQ5-11" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="Cart service" vertex="1">
+          <mxGeometry height="60" width="120" x="260" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="sJppqxGDxFXGZUXdPLQ5-12" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="Payment service" vertex="1">
+          <mxGeometry height="60" width="120" x="470" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="sJppqxGDxFXGZUXdPLQ5-13" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="Order service" vertex="1">
+          <mxGeometry height="60" width="120" x="260" y="524" as="geometry" />
+        </mxCell>
+        <mxCell id="sJppqxGDxFXGZUXdPLQ5-14" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="Identity service" vertex="1">
+          <mxGeometry height="60" width="120" x="470" y="524" as="geometry" />
+        </mxCell>
+        <mxCell id="sJppqxGDxFXGZUXdPLQ5-17" edge="1" parent="1" source="sJppqxGDxFXGZUXdPLQ5-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="sJppqxGDxFXGZUXdPLQ5-16" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sJppqxGDxFXGZUXdPLQ5-15" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="..." vertex="1">
+          <mxGeometry height="30" width="60" x="395" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="sJppqxGDxFXGZUXdPLQ5-18" edge="1" parent="1" source="sJppqxGDxFXGZUXdPLQ5-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="sJppqxGDxFXGZUXdPLQ5-15" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sJppqxGDxFXGZUXdPLQ5-16" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="RabbitMQ / Event Bus" vertex="1">
+          <mxGeometry height="90" width="390" x="230" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="sJppqxGDxFXGZUXdPLQ5-19" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="Redis" vertex="1">
+          <mxGeometry height="60" width="120" x="160" y="866" as="geometry" />
+        </mxCell>
+        <mxCell id="sJppqxGDxFXGZUXdPLQ5-20" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="SQL Server" vertex="1">
+          <mxGeometry height="60" width="120" x="365" y="866" as="geometry" />
+        </mxCell>
+        <mxCell id="sJppqxGDxFXGZUXdPLQ5-21" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="External APIs" vertex="1">
+          <mxGeometry height="60" width="120" x="570" y="866" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
