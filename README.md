@@ -65,6 +65,7 @@ The `eCommerce.Database` project runs as a separate Docker job and contains thes
 - `Migrations/V001__InitialSchema.sql` creates tables, primary and foreign keys, default values, and CHECK constraints.
 - `Migrations/V002__CartExpiryIndex.sql` adds an index for cart expiration.
 - `Migrations/V003__CaseSensitiveOwnerIdentity.sql` makes user identity comparisons case sensitive.
+- `Migrations/V004__TraceLogs.sql` creates the HTTP request and server error trace tables.
 - `Seeds/DemoData.sql` adds three products and a demo cart when `Database__SeedDemo=true`.
 
 After adding a migration, run the following commands to apply it, regenerate the EF model, and verify the API.
@@ -110,6 +111,24 @@ The Cart API CI workflow runs on pull requests and pushes to `main`. Open the re
 - Use `/health/live` to check liveness and `/health/ready` to check readiness.
 - Run `docker compose logs cart-api database` to inspect API and migration logs.
 - Run `docker compose down` to stop the stack and keep the data volume.
+
+### SQL Server trace logs
+
+Completed `/api` requests produce a row in `dbo.TraceLogs` with the request ID, HTTP method, route template, response status, UTC start time, and elapsed milliseconds. Everything implemented through the middleware .
+
+To look up a request, copy its `X-Trace-Id` into this query:
+
+```sql
+DECLARE @TraceId nvarchar(128) = N'paste-request-id-here';
+
+SELECT t.TraceId, t.Method, t.RouteTemplate, t.StatusCode, t.StartedAt,
+       t.DurationMs, e.ExceptionType
+FROM dbo.TraceLogs AS t
+LEFT JOIN dbo.TraceLogErrors AS e ON e.TraceLogId = t.Id
+WHERE t.TraceId = @TraceId;
+```
+
+The API queues trace entries in memory and writes batches in the background. Entries can be dropped when the queue fills or a database write fails. The `ecommerce.trace.dropped` metric counts those drops. Retention policy not defined yet.
 
 ## Security and production scope
 

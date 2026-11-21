@@ -1,6 +1,7 @@
 ﻿using eCommerce.Domain.Persistence;
 using eCommerce.ServiceInterfaces;
 using Microsoft.AspNetCore.Diagnostics;
+using System.Diagnostics;
 namespace eCommerce.Backend;
 public sealed class ApiExceptionHandler(ILogger<ApiExceptionHandler> logger) : IExceptionHandler
 {
@@ -17,10 +18,11 @@ public sealed class ApiExceptionHandler(ILogger<ApiExceptionHandler> logger) : I
             StorageUnavailableException => (503, "Database is busy. Read the cart before retrying."),
             _ => (500, "An unexpected error occurred.")
         };
-        if (status >= 500) logger.LogError(exception, "Request failed. TraceId: {TraceId}", context.TraceIdentifier);
+        var traceId = Activity.Current?.Id ?? context.TraceIdentifier;
+        if (status >= 500) logger.LogError(exception, "Request failed. TraceId: {TraceId}", traceId);
         if (status == 503) context.Response.Headers.RetryAfter = "1";
         await Results.Problem(statusCode: status, title: title,
-            extensions: new Dictionary<string, object?> { ["traceId"] = context.TraceIdentifier }).ExecuteAsync(context);
+            extensions: new Dictionary<string, object?> { ["traceId"] = traceId }).ExecuteAsync(context);
         return true;
     }
 }

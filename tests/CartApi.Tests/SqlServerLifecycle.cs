@@ -40,7 +40,7 @@ public sealed partial class CartTests
         await using var connection = new SqlConnection(ConnectionString);
         await connection.OpenAsync();
         await using var count = new SqlCommand("SELECT COUNT(*) FROM dbo.SchemaVersions", connection);
-        Assert.Equal(3, (int)(await count.ExecuteScalarAsync())!);
+        Assert.Equal(4, (int)(await count.ExecuteScalarAsync())!);
         await using var constraint = new SqlCommand("INSERT dbo.CartItems(CartId,ProductId,Quantity,UnitPriceMinor) VALUES('11111111-1111-1111-1111-111111111111','monitor',0,24900)", connection);
         var error = await Assert.ThrowsAsync<SqlException>(() => constraint.ExecuteNonQueryAsync());
         Assert.Equal(547, error.Number);

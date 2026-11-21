@@ -52,6 +52,10 @@ Use TLS, input validation, rate limits and database accounts with limited permis
 
 Payment, marketplace, B2B and tax integrations get their own adapters. Each needs timeouts, controlled retries and a record of the request outcome. 
 
+### Croatian Tax Authority
+
+For B2C invoices, the worker sends signed XML over SOAP/TLS to Porezna uprava and stores the returned JIR or error code.
+
 ## Monitoring and delivery
 
 Use structured logs with trace IDs, OpenTelemetry and shared dashboards. Monitor API errors and latency, database connections, queue depth and failed payments. Alerts need a clear owner.
@@ -61,6 +65,14 @@ Use structured logs with trace IDs, OpenTelemetry and shared dashboards. Monitor
 
 Deploy the same image through test and production environments. Use a gradual rollout and keep the previous image available for rollback. Database changes run in a separate migration job and need to remain compatible with the previous application version.
 
+
+### Git flow
+
+- *feature branch*: each implemented feature 
+- *release branch*: release candidate, versioned, must also include tag (e.g. v1.0.0)
+- *bugfix branch*: fixes for noticed bugs during testing
+- *main branch*: production version code, latest release branch is merged
+- *hotfix branch*: during urgent production incidents and issues
 
 ### Teams 
 One team can own catalog, cart and channel APIs; the other can own orders, stock, payments and integrations. Both share responsibility for deployment and monitoring.

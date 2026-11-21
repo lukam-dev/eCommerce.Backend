@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using System.Threading.RateLimiting;
 using eCommerce.Backend;
+using eCommerce.Backend.Tracing;
 using eCommerce.BL.Services;
 using eCommerce.DL;
 using eCommerce.DL.Repositories;
@@ -39,6 +40,9 @@ builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICartRepository, CartRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<TraceLogRepository>();
+builder.Services.AddSingleton<TraceLogQueue>();
+builder.Services.AddHostedService<TraceLogWorker>();
 
 if (demo && !builder.Environment.IsDevelopment())
     throw new InvalidOperationException("Demo authentication is allowed only in Development.");
@@ -79,6 +83,7 @@ builder.Services.AddHealthChecks().AddCheck<DatabaseHealthCheck>("database", tag
 builder.Logging.AddJsonConsole();
 
 var app = builder.Build();
+app.UseMiddleware<TraceLogMiddleware>();
 app.UseExceptionHandler(new ExceptionHandlerOptions
 {
     // Preserve exception diagnostics when handlers return true on .NET 10.

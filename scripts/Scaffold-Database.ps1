@@ -9,7 +9,7 @@ try {
     }
     dotnet tool restore
     if ($LASTEXITCODE -ne 0) { throw 'Tool restore failed.' }
-    dotnet ef dbcontext scaffold 'Name=ConnectionStrings:Cart' Microsoft.EntityFrameworkCore.SqlServer --project eCommerce.DL --startup-project eCommerce.Backend --context CartDbContext --context-dir . --output-dir ../eCommerce.Domain/Entities --namespace eCommerce.Domain.Entities --context-namespace eCommerce.DL --table Carts --table CartItems --table Products --no-onconfiguring --force
+    dotnet ef dbcontext scaffold 'Name=ConnectionStrings:Cart' Microsoft.EntityFrameworkCore.SqlServer --project eCommerce.DL --startup-project eCommerce.Backend --context CartDbContext --context-dir . --output-dir ../eCommerce.Domain/Entities --namespace eCommerce.Domain.Entities --context-namespace eCommerce.DL --table Carts --table CartItems --table Products --table TraceLogs --table TraceLogErrors --no-onconfiguring --force
     if ($LASTEXITCODE -ne 0) { throw 'Scaffold failed.' }
 } finally {
     Pop-Location
