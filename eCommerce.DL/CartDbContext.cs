@@ -18,6 +18,10 @@ public partial class CartDbContext : DbContext
 
     public virtual DbSet<Product> Products { get; set; }
 
+    public virtual DbSet<TraceLog> TraceLogs { get; set; }
+
+    public virtual DbSet<TraceLogError> TraceLogErrors { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Cart>(entity =>
@@ -65,6 +69,29 @@ public partial class CartDbContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.Name).HasMaxLength(200);
+        });
+
+        modelBuilder.Entity<TraceLog>(entity =>
+        {
+            entity.HasIndex(e => e.StartedAt, "IX_TraceLogs_StartedAt");
+
+            entity.HasIndex(e => e.TraceId, "IX_TraceLogs_TraceId");
+
+            entity.Property(e => e.Method).HasMaxLength(32);
+            entity.Property(e => e.RouteTemplate).HasMaxLength(256);
+            entity.Property(e => e.TraceId).HasMaxLength(128);
+        });
+
+        modelBuilder.Entity<TraceLogError>(entity =>
+        {
+            entity.HasKey(e => e.TraceLogId);
+
+            entity.Property(e => e.TraceLogId).ValueGeneratedNever();
+            entity.Property(e => e.ExceptionType).HasMaxLength(256);
+
+            entity.HasOne(d => d.TraceLog).WithOne(p => p.TraceLogError)
+                .HasForeignKey<TraceLogError>(d => d.TraceLogId)
+                .HasConstraintName("FK_TraceLogErrors_TraceLogs");
         });
 
         OnModelCreatingPartial(modelBuilder);
